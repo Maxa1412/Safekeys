@@ -1,0 +1,34 @@
+{
+  "name": "safekeys",
+  "version": "0.0.1-alpha",
+  "description": "A secure and flexible tool for managing sensitive configuration data in Node.js applications",
+  "main": "./dist/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "safekeys",
+    "secure",
+    "configuration",
+    "secrets",
+    "environment",
+    "keys",
+    "nodejs",
+    "key-management",
+    "config",
+    "encrypted-keys",
+    "secret-management",
+    "validation",
+    "parsing",
+    "environment-variables",
+    "node",
+    "security",
+    "key-value",
+    "config-management"
+  ],
+  "author": "MaxA",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "^0.0.1-security"
+  }
+}
