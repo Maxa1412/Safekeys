@@ -1,10 +1,10 @@
 {
   "name": "safekeys",
-  "version": "0.0.1-alpha",
+  "version": "0.0.1-safe",
   "description": "A secure and flexible tool for managing sensitive configuration data in Node.js applications",
   "main": "./dist/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lib:build": "tsc"
   },
   "keywords": [
     "safekeys",
@@ -29,6 +29,17 @@
   "author": "MaxA",
   "license": "MIT",
   "dependencies": {
+    "@types/node": "^22.5.1",
+    "dotenv": "^16.4.5",
     "fs": "^0.0.1-security"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maxa1412/Safekeys.git"
+  },
+  "types": "./dist/main.d.ts",
+  "bugs": {
+    "url": "https://github.com/Maxa1412/Safekeys/issues"
+  },
+  "homepage": "https://github.com/Maxa1412/Safekeys#readme"
 }
