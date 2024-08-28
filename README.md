@@ -21,28 +21,31 @@ npm install safekeys
 ### Initializing SafeKeys
 
 For **TypeScript** projects:
+
 ```typescript
 import sks from 'safekeys';
 
 sks.init().then(() => {
   if (sks.has('API_KEY')) {
-    console.log('API Key:', get('API_KEY'));
+    console.log('API Key:', sks.get('API_KEY'));
   }
 });
 ```
 
 For **JavaScript** projects:
+
 ```javascript
 const sks = require('safekeys');
 
 sks.init().then(() => {
   if (sks.has('API_KEY')) {
-    console.log('API Key:', get('API_KEY'));
+    console.log('API Key:', sks.get('API_KEY'));
   }
 });
 ```
 
-Or Initialize directly
+Or initialize directly:
+
 ```javascript
 require('safekeys').init();
 // Your code...
@@ -69,6 +72,23 @@ SafeKeys uses a `.sks` file for storing key-value pairs. The format is simple:
 ```plaintext
 API_KEY=your-api-key-here
 DATABASE_URL=your-database-url-here
+```
+
+## Adding Values
+
+The `add` function allows you to add values to arrays or key-value pairs to objects within the `.sks` file.
+
+- **For Arrays**: If the specified key refers to an array, you can add new items to it.
+- **For Objects**: If the specified key refers to an object, you can add or update key-value pairs within it.
+
+### Example Usage
+
+```javascript
+// Adding to an array
+sks.add('arrayKey', 'newItem');
+
+// Adding key-value pair to an object
+sks.add('objectKey', 'newSubKey', 'newValue');
 ```
 
 ## License
