@@ -12,5 +12,6 @@ var ErrorsCat;
     ErrorsCat["E1006"] = "Invalid key";
     ErrorsCat["E1007"] = "The requested key was not found";
     ErrorsCat["E1008"] = "Cannot add a key to non objects/arrays SKS";
+    ErrorsCat["E1009"] = "Invalid object/array name was provided";
 })(ErrorsCat || (exports.ErrorsCat = ErrorsCat = {}));
 ;

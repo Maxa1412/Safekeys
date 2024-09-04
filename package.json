@@ -1,6 +1,6 @@
 {
   "name": "safekeys",
-  "version": "0.0.1-safe",
+  "version": "0.1.0",
   "description": "A secure and flexible tool for managing sensitive configuration data in Node.js applications",
   "main": "./dist/main.js",
   "scripts": {
@@ -30,7 +30,6 @@
   "license": "MIT",
   "dependencies": {
     "@types/node": "^22.5.1",
-    "dotenv": "^16.4.5",
     "fs": "^0.0.1-security"
   },
   "repository": {

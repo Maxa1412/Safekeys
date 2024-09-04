@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Errors = exports.Colors = exports.SKSWarn = exports.SKSError = exports.format = exports.remove = exports.get = exports.has = exports.init = void 0;
+exports.Errors = exports.Colors = exports.SKSWarn = exports.SKSError = exports.add = exports.format = exports.remove = exports.get = exports.has = exports.init = void 0;
 const fs_1 = require("fs");
 const line_1 = require("./addons/line");
 const SKSError_1 = __importDefault(require("./addons/SKSError"));
@@ -92,12 +92,22 @@ const init = async (debug = false) => {
                     ;
                     type = new Colors_1.default("Never").Orange();
                 }
-                else if (value === '{}') {
-                    value = {};
+                else if (value === '{}' || (value.startsWith('{') && value.endsWith('}'))) {
+                    try {
+                        value = JSON.parse(value);
+                    }
+                    catch {
+                        value = value;
+                    }
                     type = new Colors_1.default("Object").Cyan();
                 }
-                else if (value === '[]') {
-                    value = [];
+                else if (value === '[]' || (value.startsWith('[') && value.endsWith(']'))) {
+                    try {
+                        value = JSON.parse(value);
+                    }
+                    catch {
+                        value = value;
+                    }
                     type = new Colors_1.default("Array").Cyan();
                 }
                 ;
@@ -107,6 +117,8 @@ const init = async (debug = false) => {
                 throw new SKSError_1.default(`Invalid value for SecretKey '${key}' at ${count}:${line.indexOf('=') + 1}`, 1004);
             if (value) {
                 for (let char of Array.from(value)) {
+                    if (type.startsWith('typeof'))
+                        break;
                     if (unusal.has(char)) {
                         new SKSWarn_1.default(2002, { key: key, line: count, column: key.length + value.indexOf(char) + 2 }).log();
                         break;
@@ -132,7 +144,7 @@ const init = async (debug = false) => {
             console.log(new Colors_1.default("Successfully loaded SKS.").Green());
     }
     catch (err) {
-        throw new SKSError_1.default(err?.message, 1001);
+        console.error(err);
     }
     ;
 };
@@ -158,24 +170,27 @@ const format = (verify = false) => {
     return verify === true ? process.sks = {} : false;
 };
 exports.format = format;
-const add = (obj_arr_name, key, value) => {
-    if (!key && typeof key !== 'string')
+const add = (name, key, value) => {
+    if (!name && typeof name !== 'string')
+        throw new SKSError_1.default(`Please provide a valid object/array name '${name}'`, 1009);
+    if (!key)
         throw new SKSError_1.default(`Please provide a valid key '${key}'`, 1006);
-    if (!value && ![false, 0, null, undefined, NaN, {}, []].includes(value))
+    if (!process.sks || !process.sks.hasOwnProperty(name))
+        throw new SKSError_1.default(`The key '${name}' has not found`, 1007);
+    if (!value && ![false, 0, null, undefined, NaN, {}, []].includes(value) && !Array.isArray(process.sks[name]))
         throw new SKSError_1.default(`Please provide a valid value '${value}'`, 1004);
-    if (!process.sks || !process.sks.hasOwnProperty(obj_arr_name))
-        throw new SKSError_1.default(`The key '${key}' has not found`, 1007);
-    if (Array.isArray(process.sks[obj_arr_name])) {
-        process.sks[obj_arr_name].push(key);
+    if (Array.isArray(process.sks[name])) {
+        process.sks[name].push(key);
     }
-    else if (typeof process.sks[obj_arr_name] === 'object') {
-        process.sks[obj_arr_name][key] = value;
+    else if (typeof process.sks[name] === 'object') {
+        process.sks[name][key] = value;
     }
     else {
-        throw new SKSError_1.default(`Cannot add '${typeof key}' to '${typeof process.sks[obj_arr_name]}'`, 1008);
+        throw new SKSError_1.default(`Cannot add '${typeof key}' to '${typeof process.sks[name]}'`, 1008);
     }
     ;
     save(process.sks);
 };
+exports.add = add;
 var ErrorsCat_1 = require("./addons/ErrorsCat");
 Object.defineProperty(exports, "Errors", { enumerable: true, get: function () { return ErrorsCat_1.ErrorsCat; } });

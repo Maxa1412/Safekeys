@@ -1,0 +1,21 @@
+# Owner ID
+ID=1234567890
+
+# Storage Permissions
+READ=TRUE # or true
+WRITE=FALSE # or false
+
+API_KEY=ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 # DB Token
+
+# DB Schema
+USERSCHEMA=type string # or str
+AUTHTYPE=type bool # or boolean
+CODETYPE=type number # integer or float
+
+# Else
+TAX=12.5
+undef=undefined
+nil=null
+obj={"1-a":1, "a": [1,2,3]}
+arr=[{ "a": 6 }, false, 5]
+nan=NaN
